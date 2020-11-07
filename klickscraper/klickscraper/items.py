@@ -1,12 +1,11 @@
-# Define here the models for your scraped items
-#
-# See documentation in:
-# https://docs.scrapy.org/en/latest/topics/items.html
-
 import scrapy
 
 
-class KlickscraperItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+class HeftigItem(scrapy.Item):
+
+    news_id = scrapy.Field()
+    headline = scrapy.Field()
+    img = scrapy.Field()
+    link = scrapy.Field()
+    date = scrapy.Field()
+    scraped_at = scrapy.Field()
