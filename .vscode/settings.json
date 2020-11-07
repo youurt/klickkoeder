@@ -1,0 +1,33 @@
+{
+    "python.pythonPath": "/usr/local/bin/python3.8",
+    "cSpell.enableFiletypes": [
+        "!asciidoc",
+        "!c",
+        "!cpp",
+        "!csharp",
+        "!css",
+        "!git-commit",
+        "!go",
+        "!graphql",
+        "!handlebars",
+        "!haskell",
+        "!html",
+        "!jade",
+        "!java",
+        "!javascript",
+        "!javascriptreact",
+        "!json",
+        "!jsonc",
+        "!less",
+        "!pug",
+        "!python",
+        "!restructuredtext",
+        "!rust",
+        "!scala",
+        "!scss",
+        "!typescript",
+        "!typescriptreact",
+        "!yaml",
+        "!yml"
+    ]
+}
