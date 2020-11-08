@@ -3,12 +3,10 @@ from scrapy import Request
 import json
 from klickscraper.items import HeftigItem
 from datetime import datetime
-from urllib.parse import urlparse
 
 
 class HeftigSpider(scrapy.Spider):
     name = 'heftig'
-    allowed_domains = ['heftig.de']
     start_urls = ['http://heftig.de/']
     scraped_at = datetime.now()
 

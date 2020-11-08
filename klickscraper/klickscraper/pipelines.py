@@ -4,7 +4,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.engine.url import URL
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
-from klickscraper.items import HeftigItem
+from klickscraper.items import HeftigItem, WikinewsItem, BuzzfeedItem
 import klickscraper.models as models
 import os
 
@@ -53,16 +53,56 @@ class SqlitePipeline:
     def process_item(self, item, spider):
         session = self.sessions[spider]
         if isinstance(item, HeftigItem):
-            scraping_exists = session.query(models.Scraping).filter_by(
+            heftig_exists = session.query(models.Heftig).filter_by(
                 news_id=item["news_id"]).first()
-            if scraping_exists is not None:
-                s = scraping_exists
+            if heftig_exists is not None:
+                s = heftig_exists
             else:
-                s = models.Scraping(**{i: item[i] for i in item if i in [
+                s = models.Heftig(**{i: item[i] for i in item if i in [
                     "news_id", "headline", "img", "link", "date", "scraped_at"]})
 
             try:
                 session.add(s)
+                session.commit()
+            except:
+                session.rollback()
+                raise
+            finally:
+                session.close()
+
+            return item
+
+        if isinstance(item, WikinewsItem):
+            wiki_exists = session.query(models.Wiki).filter_by(
+                page_id=item["page_id"]).first()
+            if wiki_exists is not None:
+                w = wiki_exists
+            else:
+                w = models.Wiki(**{i: item[i] for i in item if i in [
+                    "page_id", "title", "scraped_at", "category"]})
+
+            try:
+                session.add(w)
+                session.commit()
+            except:
+                session.rollback()
+                raise
+            finally:
+                session.close()
+
+            return item
+
+        if isinstance(item, BuzzfeedItem):
+            buzz_exists = session.query(models.Buzz).filter_by(
+                headline=item["headline"]).first()
+            if buzz_exists is not None:
+                b = buzz_exists
+            else:
+                b = models.Buzz(**{i: item[i] for i in item if i in [
+                    "headline", "scraped_at"]})
+
+            try:
+                session.add(b)
                 session.commit()
             except:
                 session.rollback()
