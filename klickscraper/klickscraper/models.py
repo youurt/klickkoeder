@@ -29,3 +29,10 @@ class Buzz(DeclarativeBase):
     id = Column(Integer, primary_key=True)
     headline = Column("headline", String(255))
     scraped_at = Column('scraped_at', DateTime)
+
+
+class Tvmovie(DeclarativeBase):
+    __tablename__ = "tvmovie"
+    id = Column(Integer, primary_key=True)
+    headline = Column("headline", String(255))
+    scraped_at = Column('scraped_at', DateTime)

@@ -4,7 +4,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.engine.url import URL
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
-from klickscraper.items import HeftigItem, WikinewsItem, BuzzfeedItem
+from klickscraper.items import HeftigItem, WikinewsItem, BuzzfeedItem, TvMovieItem
 import klickscraper.models as models
 import os
 
@@ -103,6 +103,26 @@ class SqlitePipeline:
 
             try:
                 session.add(b)
+                session.commit()
+            except:
+                session.rollback()
+                raise
+            finally:
+                session.close()
+
+            return item
+
+        if isinstance(item, TvMovieItem):
+            tvmovie_exists = session.query(models.Tvmovie).filter_by(
+                headline=item["headline"]).first()
+            if tvmovie_exists is not None:
+                t = tvmovie_exists
+            else:
+                t = models.Tvmovie(**{i: item[i] for i in item if i in [
+                    "headline", "scraped_at"]})
+
+            try:
+                session.add(t)
                 session.commit()
             except:
                 session.rollback()

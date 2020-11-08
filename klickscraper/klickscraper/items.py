@@ -21,3 +21,8 @@ class WikinewsItem(scrapy.Item):
 class BuzzfeedItem(scrapy.Item):
     headline = scrapy.Field()
     scraped_at = scrapy.Field()
+
+
+class TvMovieItem(scrapy.Item):
+    headline = scrapy.Field()
+    scraped_at = scrapy.Field()
